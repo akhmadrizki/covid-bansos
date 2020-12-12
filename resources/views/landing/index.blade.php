@@ -8,9 +8,22 @@
 
 @section('content')
   <section class="section">
+
+    @if($message = Session::get('success'))
+    <div class="alert alert-success alert-dismissible show fade">
+      <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+          <span>×</span>
+        </button>
+        {{ $message }}
+      </div>
+    </div>
+    @endif
+
     <div class="container mt-5">
       <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+          <h1 class="text-center">Bantuan Covid-19</h1>
           <div class="card card-primary">
             <div class="card-body">
               <div class="bs-stepper">
@@ -33,95 +46,88 @@
                 </div>
                 {{-- step content --}}
                 <div class="bs-stepper-content">
-                  <form id="form" class="needs-validation">
+                  <form id="form" action="{{route('add.pemohon')}}" method="POST" enctype="multipart/form-data" class="needs-validation">
                   @csrf
                     <div class="content" id="account-detail" role="tabpanel" aria-labelledby="account-detail-trigger">
 
                       <div class="row">
                         <div class="form-group col-6">
-                          <label for="name">Nama Lengkap</label>
-                          <input id="name" type="text" class="form-control name="name" required autocomplete="name" autofocus>
+                          <label for="name">Nama Pemohon</label>
+                          <input id="name" type="text" class="form-control" name="name" required autocomplete="name" autofocus>
                         </div>
                         <div class="form-group col-6">
-                          <label for="username">Username</label>
-                          <input type="text" name="username" id="username" class="form-control" required>
+                          <label for="nik">NIK</label>
+                          <input type="number" name="nik" id="nik" class="form-control" required>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="form-group col-6">
-                          <label for="email">Email</label>
-                          <input id="email" type="email" class="form-control name="email" required autocomplete="email">
+                          <label for="kecamatan">Kecamatan</label>
+                          <input id="text" type="kecamatan" class="form-control" name="kecamatan">
                         </div>
                         <div class="form-group col-6">
-                          <label for="phone_number">No. Handphone</label>
-                          <input type="tel" class="form-control phone-number" placeholder="Ex: 0834xxxx" name="phone_number" id="phone_number" required>
+                          <label for="desa">Desa</label>
+                          <input type="text" class="form-control" name="desa" id="desa" required>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="form-group col-6">
-                          <label for="date_birth" class="d-block">Tanggal Lahir</label>
-                          <input type="text" class="form-control datepicker" placeholder="Tanggal Lahir" name="date_birth" id="date_birth" required>
+                          <label for="alamat">Alamat</label>
+                          <input type="text" class="form-control" placeholder="Ex: 0834xxxx" name="alamat" id="alamat" required>
                         </div>
                         <div class="form-group col-6">
-                          <label for="status" class="d-block">Status</label>
-                          <select class="form-control selectric" name="status" id="status" required>
-                            <option value="pelajar">Pelajar/Mahasiswa</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="form-group col-12">
-                          <label for="instansi" class="d-block">Instansi</label>
-                          
+                          <label for="tgl_pengajuan" class="d-block">Tanggal Pengajuan</label>
+                          <input type="text" class="form-control datepicker" name="tgl_pengajuan" id="tgl_pengajuan" required>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="form-group col-6">
-                          <label for="password" class="d-block">Password</label>
+                          <label for="ktp">Foto KTP</label>
+                          <input type="file" class="form-control" name="ktp" required>
                         </div>
                         <div class="form-group col-6">
-                          <label for="password-confirm" class="d-block">Konfirmasi Password</label>
-                          <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="form-group col-4">
-                          <label for="keahlian" class="d-block">Bidang Kreatif</label>
-                          <select class="form-control selectric" name="keahlian" id="keahlian" required>
-                            <option value="aplikasi-dan-pengembangan-permainan">Aplikasi dan pengembangan permainan</option>
-                            <option value="arsitektur">Arsitektur</option>
-                            <option  value="desain-produk">Desain Produk</option>
-                            <option  value="fesyen">Fesyen</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-8">
-                          <label for="portfolio" class="d-block">Portfolio (optional)</label>
-                          <span style="font-size: 12px;">*Ket: Max. 2MB (PDF)</span>
+                          <label for="kk">Foto KK</label>
+                          <input type="file" class="form-control" name="kk" required>
                         </div>
                       </div>
                       <div class="form-group">
                         <button type="button" class="btn btn-lg custom-btn btn-next-form" onclick="stepNext()">Selanjutnya</button>
                       </div>
                     </div>
+                    
                     <div class="content" id="identity" role="tabpanel" aria-labelledby="identity-trigger">
                       <div class="row">
                         <div class="form-group col-6">
-                          <label for="ktp">Foto KTP</label>
-                          <b>IMPORTANT NOTE: Foto KTP Wajib Diisi!</b>
+                          <label for="pekerjaan" class="d-block">Pekerjaan</label>
+                          <select class="form-control selectric" name="pekerjaan" id="pekerjaan" required>
+                            <option value="none">- Pekerjaan -</option>
+                            <option value="pns">PNS</option>
+                            <option value="wiraswasta">Wiraswasta</option>
+                            <option value="wirausaha">Wirausaha</option>
+                            <option value="irt">Ibu Rumah Tangga</option>
+                          </select>
                         </div>
                         <div class="form-group col-6">
-                          <label for="nik">No. NIK</label>
-                          <input id="nik" type="number" class="form-control" name="no_nik" required>
+                          <label for="gaji">Rata-Rata Pendapatan Perbualan</label>
+                          <input type="number" name="gaji" id="gaji" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-6">
+                          <label for="rekening" class="d-block">No. Rekening</label>
+                          <input type="number" name="rekening" id="rekening" class="form-control" required>
+                        </div>
+                        <div class="form-group col-6">
+                          <label for="wa">No Hp/WA</label>
+                          <input type="tel" name="wa" id="wa" class="form-control" required>
                         </div>
                       </div>
                       <div class="form-group mb-0">
                         <button type="button" class="btn btn-lg btn-light mr-1" onclick="stepPrev()">Sebelumnya</button>
-                        <button type="submit" class="btn btn-lg custom-btn">Register</button>
+                        <button type="submit" class="btn btn-lg btn-primary">Kirim</button>
                       </div>
                     </div>
                   </form>

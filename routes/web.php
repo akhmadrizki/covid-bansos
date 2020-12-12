@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('landing.index');
 });
+
+Route::post('/', 'Client\PemohonController@store')->name('add.pemohon');
