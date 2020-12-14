@@ -29,13 +29,16 @@ class PemohonController extends Controller
 
         if ($request->hasFile('ktp') and $request->hasFile('kk')) {
             $image    = $request->file('ktp');
-            $image    = $request->file('kk');
+            $kk    = $request->file('kk');
             $filename = time() . '.' . $image->getClientOriginalExtension();
+            $filenamekk = 'kk' . time() . '.' . $kk->getClientOriginalExtension();
             $location = public_path('img/' . $filename);
+            $locationkk = public_path('img/' . $filenamekk);
             Image::make($image)->save($location);
+            Image::make($kk)->save($locationkk);
 
             $fields['ktp'] = $filename;
-            $fields['kk']  = $filename;
+            $fields['kk']  = $filenamekk;
         }
 
         Datapemohon::create($fields);

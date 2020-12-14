@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::post('/', 'Client\PemohonController@store')->name('add.pemohon');
 
-// Login Routes
+// Login Admin
 Route::get('/admin', 'Auth\LoginController@index')->name('admin');
 
 // Dasboard Admin
@@ -27,6 +27,8 @@ Route::prefix('/')->group(function () {
     })->name('login');
     Route::post('/login', 'Auth\LoginController@login')->name('login');
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('/register', 'Auth\RegisterController@register');
 
     // Password Reset Routes...
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -38,7 +40,7 @@ Route::prefix('/')->group(function () {
 Route::group(['middleware' => 'auth'], function () {
     // Dashboard Page
     Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('admin');
+    Route::get('/dashboard/list', 'Dashboard\DashboardController@list')->name('admin.list');
 });
 
-Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

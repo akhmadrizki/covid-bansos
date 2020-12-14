@@ -52,8 +52,12 @@
           </div>
           <ul class="sidebar-menu">
             {{-- <li class="{{ set_active('dashboard.index') }}"><a href="{{ route('dashboard.index') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a></li> --}}
-            <li class="menu-header">CJDW Academy</li>
-            <li><a href="" class="nav-link"><i class="fas fa-users"></i><span>Pelamar</span></a></li>
+            <li class="dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-home"></i><span>Dashboard</span></a>
+              <ul class="dropdown-menu" style="">
+                <li><a class="nav-link" href="{{ route('admin.list') }}">List Pengajuan</a></li>
+              </ul>
+            </li>
           </ul>
         </aside>
       </div>
